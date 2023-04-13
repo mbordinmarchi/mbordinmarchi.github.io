@@ -78,7 +78,39 @@
 								<a href="#" class="image main"><img src="images/pic01.jpg" alt="" /></a>
 							</article>
 						-->
-							<article class="post featured" style="display: flex; flex-direction: row;">
+
+						<style>
+							.post {
+							  display: flex;
+							  flex-direction: row;
+							}
+							.post .text {
+							  margin-right: 30px;
+							}
+							.post .image {
+							  margin-left: 25px;
+							  margin-top: 70px;
+							  margin-right: 0px;
+							  width: 102%;
+							}
+							/* Styles for small screens */
+							@media only screen and (max-width: 600px) {
+							  .post {
+								flex-direction: column;
+							  }
+							  .post .text {
+								margin-left: 0;
+								margin-right: 0;
+							  }
+							  .post .image {
+								margin-top: 20px;
+								margin-left: -25px;
+								width: 200%;
+							  }
+							}
+						  </style>
+
+						<article class="post featured" style="display: flex; flex-direction: row;">
 								<div style="margin-right: 30px;">
 									<h2><a>About me<br /></a></h2>
 									<header class="major">
@@ -94,7 +126,7 @@
 										</p>
 									</header>
 								</div>
-								<div style="margin-top: 70px;margin-right: 0px;width: 220%;">
+								<div style="margin-top: 65px;margin-right: 0px;width: 220%;">
 									<a class="image main"><img src="images/photo.jpg" alt="" /></a>
 								</div>
 							</article>
