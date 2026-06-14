@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Portfolio — Matheus Bordin Marchi, PhD</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0B0F1A;
+  --surface: #141824;
+  --surface2: #1C2133;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+  --text: #E8E6F0;
+  --muted: #7A7D9A;
+  --gold: #C8A84B;
+  --gold-light: #EDD68A;
+  --teal: #2DD4A0;
+  --purple: #9B87F5;
+  --coral: #F07A5B;
+  --blue: #60A5FA;
+  --amber: #FBBF24;
+  --green: #6EE7B7;
+  --pink: #F472B6;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 3.5rem 2rem 2.5rem;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(200,168,75,0.08) 0%, transparent 70%);
+  border-bottom: 0.5px solid var(--border);
+  animation: fadeUp 0.6s ease both;
+}
+.hero-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.hero-name { font-size: 34px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+.hero-name span { color: var(--gold); }
+.hero-role { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.hero-links { display: flex; gap: 1.2rem; margin-top: 14px; flex-wrap: wrap; }
+.hero-links a { font-size: 12px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.15s; }
+.hero-links a:hover { color: var(--gold-light); }
+
+.hero-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.hstat { background: var(--surface); border: 0.5px solid var(--border); border-radius: 10px; padding: 0.9rem 1.1rem; min-width: 100px; text-align: center; }
+.hstat-val { font-size: 26px; font-weight: 700; color: var(--gold); }
+.hstat-lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ─── MAIN LAYOUT ────────────────────── */
+.main { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+/* ─── SECTION LABELS ─────────────────── */
+.sec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; }
+.sec-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+/* ─── FILTER BAR ─────────────────────── */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 1.8rem; flex-wrap: wrap; }
+.filter-btn {
+  font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px;
+  border: 0.5px solid var(--border);
+  background: transparent; color: var(--muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
+.filter-btn.active { background: rgba(200,168,75,0.12); border-color: var(--gold); color: var(--gold-light); }
+
+/* ─── GAMES GRID ─────────────────────── */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 3rem;
+}
+
+.game-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.5s ease both;
+}
+.game-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.game-card.hidden { display: none; }
+
+.card-img {
+  width: 100%; height: 160px;
+  position: relative; overflow: hidden;
+  background: var(--surface2);
+}
+.card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease, opacity 0.3s;
+  opacity: 0;
+}
+.card-img img.loaded { opacity: 1; }
+.game-card:hover .card-img img { transform: scale(1.04); }
+
+.card-img::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite;
+  pointer-events: none;
+}
+
+.rtp-badge {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(10,14,26,0.82);
+  border: 0.5px solid rgba(200,168,75,0.4);
+  border-radius: 20px;
+  padding: 3px 9px;
+  font-size: 11px; font-weight: 600; color: var(--gold-light);
+  backdrop-filter: blur(4px);
+  opacity: 0; transform: translateY(-4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.game-card:hover .rtp-badge { opacity: 1; transform: translateY(0); }
+
+.card-body { padding: 1rem 1.15rem 1.1rem; }
+.card-company { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.card-type  { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.badge { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 20px; }
+.b-gold   { background: rgba(200,168,75,0.13); color: var(--gold-light); }
+.b-teal   { background: rgba(45,212,160,0.12);  color: var(--teal); }
+.b-purple { background: rgba(155,135,245,0.12); color: var(--purple); }
+.b-coral  { background: rgba(240,122,91,0.12);  color: var(--coral); }
+.b-blue   { background: rgba(96,165,250,0.12);  color: var(--blue); }
+.b-amber  { background: rgba(251,191,36,0.12);  color: var(--amber); }
+.b-green  { background: rgba(110,231,183,0.12); color: var(--green); }
+.b-pink   { background: rgba(244,114,182,0.12); color: var(--pink); }
+
+.card-footer { border-top: 0.5px solid var(--border); padding-top: 9px; display: flex; align-items: center; gap: 6px; }
+.footer-label { font-size: 10px; color: var(--muted); }
+.footer-value { font-size: 10px; color: var(--text); }
+
+/* ─── DETAIL MODAL ───────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(8,10,18,0.88);
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border: 0.5px solid var(--border-hover);
+  border-radius: 18px;
+  width: 100%; max-width: 540px;
+  overflow: hidden;
+  animation: fadeUp 0.25s ease;
+}
+.modal-img { width: 100%; height: 220px; object-fit: cover; }
+.modal-body { padding: 1.4rem 1.6rem 1.6rem; }
+.modal-company { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.modal-title { font-size: 20px; font-weight: 700; color: var(--text); margin: 4px 0 8px; }
+.modal-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+.modal-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.meta-item { background: var(--surface2); border-radius: 8px; padding: 0.7rem 0.9rem; }
+.meta-lbl { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+.meta-val { font-size: 15px; font-weight: 600; color: var(--gold-light); }
+.modal-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.modal-close {
+  background: var(--surface2); border: 0.5px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 8px 20px; font-size: 13px; cursor: pointer;
+  transition: background 0.15s; float: right;
+}
+.modal-close:hover { background: rgba(255,255,255,0.08); }
+
+/* ─── BINGO SECTION ──────────────────── */
+.bingo-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+.bingo-accent { width: 4px; background: linear-gradient(to bottom, var(--teal), var(--blue)); flex-shrink: 0; }
+.bingo-content { padding: 1.2rem 1.4rem; flex: 1; }
+.bingo-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.bingo-sub   { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+
+/* ─── STACK ──────────────────────────── */
+.stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 10px; margin-bottom: 3rem; animation: fadeUp 0.6s ease 0.3s both; }
+.stack-item { background: var(--surface); border: 0.5px solid var(--border); border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: flex-start; gap: 10px; transition: border-color 0.15s; }
+.stack-item:hover { border-color: var(--border-hover); }
+.stack-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.stack-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.stack-desc { font-size: 11px; color: var(--muted); }
+
+/* ─── TIMELINE ───────────────────────── */
+.timeline { position: relative; padding-left: 28px; margin-bottom: 3rem; animation: fadeUp 0.6s ease 0.4s both; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 1.4rem; }
+.tl-dot { position: absolute; left: -25px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg); }
+.tl-year { font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 2px; }
+.tl-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.tl-sub { font-size: 12px; color: var(--muted); }
+
+/* ─── FOOTER ─────────────────────────── */
+.page-footer { border-top: 0.5px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.footer-note { font-size: 11px; color: var(--muted); }
+.footer-contact { font-size: 12px; color: var(--gold); }
+
+@media (max-width: 600px) {
+  .hero-name { font-size: 24px; }
+  .hero-inner { flex-direction: column; }
+  .hero-stats { gap: 8px; }
+  .hstat { min-width: 80px; }
+  .hstat-val { font-size: 20px; }
+  .modal-meta { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="eyebrow">Game Mathematics Portfolio</p>
+      <h1 class="hero-name">Matheus Bordin Marchi, <span>PhD</span></h1>
+      <p class="hero-role">Senior Slot Game Mathematician · Florianópolis, SC, Brazil</p>
+      <div class="hero-links">
+        <a href="mailto:mbordinmarchi@gmail.com">✉ mbordinmarchi@gmail.com</a>
+        <a href="https://linkedin.com/in/mbordinmarchi">↗️ linkedin.com/in/mbordinmarchi</a>
+        <a href="tel:+5548985002608">✆ +55 (48) 98500-2608</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-val">8+</div><div class="hstat-lbl">Published titles</div></div>
+      <div class="hstat"><div class="hstat-val">3+</div><div class="hstat-lbl">Years in game math</div></div>
+      <div class="hstat"><div class="hstat-val">6</div><div class="hstat-lbl">Competitors analyzed</div></div>
+      <div class="hstat"><div class="hstat-val" style="font-size:18px;padding-top:4px">PhD</div><div class="hstat-lbl">Applied Mathematics</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SLOT GAMES -->
+  <p class="sec-label">Slot titles · Ino Games · 2023 – present</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="link-win">Link &amp; Win</button>
+    <button class="filter-btn" data-filter="power-combo">Power Combo</button>
+    <button class="filter-btn" data-filter="jackpot">Jackpot</button>
+    <button class="filter-btn" data-filter="free-spins">Free Spins</button>
+  </div>
+
+  <div class="games-grid" id="gamesGrid">
+
+    <div class="game-card" data-tags="jackpot free-spins link-win" data-delay="0"
+         data-title="Mega Forge Tons o'Cash"
+         data-type="Video slot · 5 reels · 20 paylines"
+         data-rtp="96.07%" data-vol="High" data-maxwin="10,000x"
+         data-desc="Industrial forge-themed slot with an exclusive Tons o'Cash mechanic: collecting scales, multipliers, and a progressive jackpot. High RTP with high volatility — one of the studio's most unique designs, with a max prize of up to 10,000x the bet."
+         data-badges='[["b-amber","Tons o Cash"],["b-gold","Progressive Jackpot"],["b-teal","Coin Collect"],["b-blue","Shields"]]'
+         data-img="https://slotreviewsonline.com/wp-content/uploads/2026/01/mega-forge-tons-o-cash-slot.webp">
+      <div class="card-img">
+        <img alt="Mega Forge Tons o'Cash" loading="lazy">
+        <div class="rtp-badge">RTP 96.07%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Mega Forge Tons o'Cash</div>
+        <div class="card-type">Video slot · 5 reels · 20 paylines</div>
+        <div class="badges">
+          <span class="badge b-amber">Tons o'Cash</span>
+          <span class="badge b-gold">Progressive jackpot</span>
+          <span class="badge b-teal">Coin collect</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Monte Carlo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="power-combo free-spins" data-delay="1"
+         data-title="Jaws and Jewels Power Combo"
+         data-type="Video slot · 6 reels · 30–56 paylines"
+         data-rtp="96.24%" data-vol="Medium" data-maxwin="5,000x"
+         data-desc="Pirate adventure featuring sharks as main characters. The dynamic grid expands from 4 to 6 rows. Three sharks (blue, red, yellow) each represent a distinct Free Spins feature with multipliers and jackpots."
+         data-badges='[["b-coral","Power Combo"],["b-teal","Free Spins"],["b-purple","Multiplier"],["b-blue","Lucky Frame"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2024/10/Jaws-and-Jewels-Power-Combo-featured.jpg">
+      <div class="card-img">
+        <img alt="Jaws and Jewels Power Combo" loading="lazy">
+        <div class="rtp-badge">RTP 96.24%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Jaws and Jewels Power Combo</div>
+        <div class="card-type">Video slot · 6 reels · 30–56 paylines</div>
+        <div class="badges">
+          <span class="badge b-coral">Power Combo</span>
+          <span class="badge b-teal">Free Spins</span>
+          <span class="badge b-purple">Multiplier</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Simulation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="free-spins jackpot" data-delay="2"
+         data-title="Big Mighty Bear"
+         data-type="Video slot · 5 reels · 8 paylines"
+         data-rtp="96.00%" data-vol="Medium" data-maxwin="15,000x"
+         data-desc="Brown bear in an enchanted forest with an innovative layout: reel 1 can hold 1 to 5 symbols, making the 8 paylines dynamic per spin. The giant bear symbol up to 4x4 can hit the max win even in the base game."
+         data-badges='[["b-coral","Big Bear Feature"],["b-amber","Honey Respin"],["b-teal","Sweet Bonus"],["b-blue","Free Spins"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2023/01/big-mighty-bear-featured.jpg">
+      <div class="card-img">
+        <img alt="Big Mighty Bear" loading="lazy">
+        <div class="rtp-badge">RTP 96.00%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Big Mighty Bear</div>
+        <div class="card-type">Video slot · 5 reels · 8 paylines</div>
+        <div class="badges">
+          <span class="badge b-coral">Big Bear Feature</span>
+          <span class="badge b-amber">Honey Respin</span>
+          <span class="badge b-blue">Free Spins</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Flet prototype</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="link-win jackpot free-spins" data-delay="3"
+         data-title="Bling Bling Penguin"
+         data-type="Video slot · 5 reels · 1,024 ways"
+         data-rtp="96.05%" data-vol="High" data-maxwin="10,000x"
+         data-desc="Hip-hop styled penguin draped in gold jewelry. Link&Win collects cash prizes and progressive jackpots. Features a fully original rap soundtrack commissioned exclusively for the game."
+         data-badges='[["b-blue","Link & Win"],["b-gold","Jackpot Wheel"],["b-teal","Free Spins"],["b-purple","Multiplier Upgrade"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2023/06/bling-bling-penguin-featured.jpg">
+      <div class="card-img">
+        <img alt="Bling Bling Penguin" loading="lazy">
+        <div class="rtp-badge">RTP 96.05%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Bling Bling Penguin</div>
+        <div class="card-type">Video slot · 5 reels · 1,024 ways</div>
+        <div class="badges">
+          <span class="badge b-blue">Link &amp; Win</span>
+          <span class="badge b-gold">Jackpot Wheel</span>
+          <span class="badge b-teal">Free Spins</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Monte Carlo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="link-win jackpot free-spins" data-delay="4"
+         data-title="Bling Bling Penguin: Ice on the Beach"
+         data-type="Video slot · 5 reels · 1,024 ways · sequel"
+         data-rtp="96.10%" data-vol="High" data-maxwin="5,000x"
+         data-desc="Tropical sequel to the original, set on a snow-dusted beach. Features an upgraded Ultra Link&Win mechanic, Break the Ice surprises, and a Feature Buy option for high-stakes players."
+         data-badges='[["b-purple","Ultra Link & Win"],["b-teal","Break the Ice"],["b-blue","Feature Buy"],["b-amber","Bonus Wheel"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2024/05/bling-bling-penguin-ice-on-the-beach-featured.jpg">
+      <div class="card-img">
+        <img alt="Bling Bling Penguin Ice on the Beach" loading="lazy">
+        <div class="rtp-badge">RTP 96.10%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Bling Bling Penguin: Ice on the Beach</div>
+        <div class="card-type">Video slot · 5 reels · sequel</div>
+        <div class="badges">
+          <span class="badge b-purple">Ultra Link &amp; Win</span>
+          <span class="badge b-teal">Break the Ice</span>
+          <span class="badge b-blue">Feature Buy</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · RTP analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="free-spins" data-delay="5"
+         data-title="Fruit Blender Mania"
+         data-type="Video slot · 5 reels · 3 rows"
+         data-rtp="96.04%" data-vol="Medium" data-maxwin="N/A"
+         data-desc="Modern fruit machine with the Spin'n'Fuse mechanic: symbols fuse together to create cascading combinations. The Boost feature and free spins chain together for multiplied win sequences."
+         data-badges='[["b-green","Spin n Fuse"],["b-amber","Boost"],["b-teal","Free Spins"],["b-coral","Cluster Pays"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2024/03/fruit-blender-mania-featured.jpg">
+      <div class="card-img">
+        <img alt="Fruit Blender Mania" loading="lazy">
+        <div class="rtp-badge">RTP 96.04%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Fruit Blender Mania</div>
+        <div class="card-type">Video slot · 5 reels · 3 rows</div>
+        <div class="badges">
+          <span class="badge b-green">Spin'n'Fuse</span>
+          <span class="badge b-amber">Boost</span>
+          <span class="badge b-teal">Free Spins</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Simulation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card" data-tags="power-combo free-spins jackpot" data-delay="6"
+         data-title="Fox Fortunata: Multiplier Hunt"
+         data-type="Video slot · 5 reels · 7 rows · scatter pays"
+         data-rtp="96.10%" data-vol="Medium" data-maxwin="4,000x"
+         data-desc="A cunning fox in a sunlit farm. Scatter pays trigger with 8+ matching symbols. Golden eggs apply 2x–10x multipliers; cascades and Free Spins accumulate a total win multiplier across all rounds."
+         data-badges='[["b-pink","Multiplier Hunt"],["b-gold","Golden Eggs"],["b-coral","Cascades"],["b-blue","Free Spins"]]'
+         data-img="https://igamingtoday.com/wp-content/uploads/2023/10/fox-fortunata-multiplier-hunt-featured.jpg">
+      <div class="card-img">
+        <img alt="Fox Fortunata: Multiplier Hunt" loading="lazy">
+        <div class="rtp-badge">RTP 96.10%</div>
+      </div>
+      <div class="card-body">
+        <div class="card-company">Ino Games</div>
+        <div class="card-title">Fox Fortunata: Multiplier Hunt</div>
+        <div class="card-type">Video slot · 5 reels · scatter pays</div>
+        <div class="badges">
+          <span class="badge b-pink">Multiplier Hunt</span>
+          <span class="badge b-gold">Golden Eggs</span>
+          <span class="badge b-coral">Cascades</span>
+        </div>
+        <div class="card-footer">
+          <span class="footer-label">Stack:</span>
+          <span class="footer-value">Python · PARsheet · Competitor analysis</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /games-grid -->
+
+  <!-- BINGO -->
+  <p class="sec-label">Video Bingo · Freelance · Jul 2024 – present</p>
+  <div class="bingo-card">
+    <div class="bingo-accent"></div>
+    <div class="bingo-content">
+      <div class="bingo-title">Bingão do Brasil — Video Bingo titles</div>
+      <div class="bingo-sub">São Paulo, SP · Sole mathematician on the project · Responsible for all mathematical aspects end-to-end</div>
+      <div class="badges">
+        <span class="badge b-teal">Prize distribution</span>
+        <span class="badge b-blue">Hit rate</span>
+        <span class="badge b-green">RTP compliance</span>
+        <span class="badge b-gold">Full PAR sheets</span>
+        <span class="badge b-amber">Flet prototype</span>
+        <span class="badge b-purple">Python simulation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <p class="sec-label">Math &amp; engineering stack</p>
+  <div class="stack-grid">
+    <div class="stack-item"><div class="stack-dot" style="background:var(--purple)"></div><div><div class="stack-name">Python</div><div class="stack-desc">Simulation engine, scraping, Flet UI</div></div></div>
+    <div class="stack-item"><div class="stack-dot" style="background:var(--teal)"></div><div><div class="stack-name">Monte Carlo simulation</div><div class="stack-desc">Large-scale game logic evaluation</div></div></div>
+    <div class="stack-item"><div class="stack-dot" style="background:var(--gold)"></div><div><div class="stack-name">PARsheets / Spreadsheets</div><div class="stack-desc">Win probs, RTP, hit rate, volatility</div></div></div>
+    <div class="stack-item"><div class="stack-dot" style="background:var(--blue)"></div><div><div class="stack-name">TypeScript</div><div class="stack-desc">Backend game logic validation</div></div></div>
+    <div class="stack-item"><div class="stack-dot" style="background:var(--coral)"></div><div><div class="stack-name">Web scraping pipeline</div><div class="stack-desc">Competitor RTP &amp; hit-rate data (6 studios)</div></div></div>
+    <div class="stack-item"><div class="stack-dot" style="background:var(--green)"></div><div><div class="stack-name">Regulatory documentation</div><div class="stack-desc">Compliance math submissions</div></div></div>
+  </div>
+
+  <!-- EDUCATION TIMELINE -->
+  <p class="sec-label">Academic background</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2022 – 2024</div>
+      <div class="tl-title">Postdoc — Pure and Applied Mathematics</div>
+      <div class="tl-sub">UFSC, Florianópolis · Category Theory, Algebra</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2018 – 2022</div>
+      <div class="tl-title">PhD — Pure and Applied Mathematics</div>
+      <div class="tl-sub">UFSC, Florianópolis · Category Theory, Algebra</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2016 – 2018</div>
+      <div class="tl-title">MSc — Pure and Applied Mathematics</div>
+      <div class="tl-sub">UFSC, Florianópolis</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2010 – 2015</div>
+      <div class="tl-title">BSc — Mathematics</div>
+      <div class="tl-sub">UFSM, Santa Maria · Exchange at Lakehead University, Canada (Science Without Borders scholarship)</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <span class="footer-note">PhD in Mathematics · Federal University of Santa Catarina · 2022</span>
+    <span class="footer-contact">mbordinmarchi@gmail.com</span>
+  </div>
+
+</div><!-- /main -->
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal">
+    <img class="modal-img" id="modalImg" alt="">
+    <div class="modal-body">
+      <div class="modal-company" id="modalCompany"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-badges" id="modalBadges"></div>
+      <button class="modal-close" id="modalClose">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const fallbackColors = ['#1a1f32','#1c2030','#1a2235','#1f1a2e','#1a2820','#2a1a1a','#1a1a2a'];
+
+document.querySelectorAll('.game-card').forEach((card, i) => {
+  const img = card.querySelector('.card-img img');
+  const src = card.dataset.img;
+  const delay = parseInt(card.dataset.delay || '0');
+  card.style.animationDelay = (delay * 0.07) + 's';
+  card.querySelector('.card-img').style.background = fallbackColors[i % fallbackColors.length];
+  if (src) {
+    const tempImg = new Image();
+    tempImg.onload = () => { img.src = src; img.classList.add('loaded'); };
+    tempImg.onerror = () => {};
+    tempImg.src = src;
+  }
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.game-card').forEach(card => {
+      if (filter === 'all' || (card.dataset.tags || '').split(' ').includes(filter)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+});
+
+const backdrop = document.getElementById('modalBackdrop');
+
+document.querySelectorAll('.game-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.getElementById('modalTitle').textContent = card.dataset.title;
+    document.getElementById('modalDesc').textContent  = card.dataset.desc;
+    document.getElementById('modalCompany').textContent = 'Ino Games · ' + card.dataset.type;
+
+    document.getElementById('modalMeta').innerHTML = `
+      <div class="meta-item"><div class="meta-lbl">RTP</div><div class="meta-val">${card.dataset.rtp}</div></div>
+      <div class="meta-item"><div class="meta-lbl">Volatility</div><div class="meta-val">${card.dataset.vol}</div></div>
+      <div class="meta-item"><div class="meta-lbl">Max Win</div><div class="meta-val">${card.dataset.maxwin}</div></div>
+    `;
+
+    let badgesHTML = '';
+    try {
+      JSON.parse(card.dataset.badges.replace(/'/g, '"')).forEach(([cls, label]) => {
+        badgesHTML += `<span class="badge ${cls}">${label}</span>`;
+      });
+    } catch(e) {}
+    document.getElementById('modalBadges').innerHTML = badgesHTML;
+
+    const imgEl = document.getElementById('modalImg');
+    imgEl.src = card.dataset.img || '';
+    imgEl.style.display = card.dataset.img ? 'block' : 'none';
+
+    backdrop.classList.add('open');
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click', () => backdrop.classList.remove('open'));
+backdrop.addEventListener('click', e => { if (e.target === backdrop) backdrop.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') backdrop.classList.remove('open'); });
+</script>
+</body>
+</html>
