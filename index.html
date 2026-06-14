@@ -148,6 +148,8 @@ body {
 .card-body { padding: 1rem 1.15rem 1.1rem; }
 .card-company { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
 .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.card-title a { color: inherit; text-decoration: none; transition: color 0.15s; }
+.card-title a:hover { color: var(--gold-light); text-decoration: underline; }
 .card-type  { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
 
 .badges { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
@@ -254,9 +256,9 @@ body {
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-left">
-      <p class="eyebrow">Game Mathematics Portfolio</p>
+      <p class="eyebrow">Game Mathematician Portfolio</p>
       <h1 class="hero-name">Matheus Bordin Marchi, <span>PhD</span></h1>
-      <p class="hero-role">Senior Slot Game Mathematician · Florianópolis, SC, Brazil</p>
+      <p class="hero-role">Senior Slot Game Mathematician · Florianopolis, SC, Brazil</p>
       <div class="hero-links">
         <a href="mailto:mbordinmarchi@gmail.com">✉ mbordinmarchi@gmail.com</a>
         <a href="https://linkedin.com/in/mbordinmarchi">↗️ linkedin.com/in/mbordinmarchi</a>
@@ -264,10 +266,9 @@ body {
       </div>
     </div>
     <div class="hero-stats">
-      <div class="hstat"><div class="hstat-val">8+</div><div class="hstat-lbl">Published titles</div></div>
-      <div class="hstat"><div class="hstat-val">3+</div><div class="hstat-lbl">Years in game math</div></div>
-      <div class="hstat"><div class="hstat-val">6</div><div class="hstat-lbl">Competitors analyzed</div></div>
-      <div class="hstat"><div class="hstat-val" style="font-size:18px;padding-top:4px">PhD</div><div class="hstat-lbl">Applied Mathematics</div></div>
+      <div class="hstat"><div class="hstat-val">8+</div><div class="hstat-lbl">Published Slot titles</div></div>
+      <div class="hstat"><div class="hstat-val">3+</div><div class="hstat-lbl">Years as a game mathematician</div></div>
+      <div class="hstat"><div class="hstat-val" style="font-size:18px;padding-top:4px">PhD</div><div class="hstat-lbl">Mathematics</div></div>
     </div>
   </div>
 </div>
@@ -276,7 +277,7 @@ body {
 <div class="main">
 
   <!-- SLOT GAMES -->
-  <p class="sec-label">Slot titles · Ino Games · 2023 – present</p>
+  <p class="sec-label">Slot titles · Ino Games · April 2023 to present</p>
 
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
@@ -288,6 +289,35 @@ body {
 
   <div class="games-grid" id="gamesGrid">
 
+    <div class="games-grid" id="gamesGrid">
+
+      <div class="game-card" data-tags="jackpot free-spins link-win" data-delay="0"
+           data-title="Vault Wreckers (this is a follow up to the original Jaws and Jewels Power Combo. Under certification process)"
+           data-type="Video slot · 5 reels · 20 paylines"
+           data-rtp="94%" data-vol="High" data-maxwin="10,000x"
+           data-desc="We learnt a lot from the original Jaws and Jewels Power Combo. We are using the same Power Combo mechanics with an additional wheel feature that can award instant prizes, Jackpots and trigger bonus Features in both main game and Features."
+           data-badges='[["b-amber","Power Combo"],["b-gold","Jackpot"],["b-teal","Fortune Wheel"]]'
+           data-img="https://i.scdn.co/image/ab67616d0000b27323a8321bd17fe693210812fe">
+        <div class="card-img">
+          <img alt="Vault Wreckers" loading="lazy">
+          <div class="rtp-badge">RTP 94%</div>
+        </div>
+        <div class="card-body">
+          <div class="card-company">Ino Games</div>
+          <div class="card-title">Vault Wreckers</div>
+          <div class="card-type">Slot game · 5 reels · 20 paylines</div>
+          <div class="badges">
+            <span class="badge b-amber">Power Combo</span>
+            <span class="badge b-gold">Jackpot</span>
+            <span class="badge b-teal">Fortune Wheel</span>
+          </div>
+          <div class="card-footer">
+            <span class="footer-label">Stack:</span>
+            <span class="footer-value">Monte Carlo simulation (python) · PARsheet · RTP distribution graphs analysis · Concurrency analysis</span>
+          </div>
+        </div>
+      </div>
+    
     <div class="game-card" data-tags="jackpot free-spins link-win" data-delay="0"
          data-title="Mega Forge Tons o'Cash"
          data-type="Video slot · 5 reels · 20 paylines"
@@ -301,7 +331,7 @@ body {
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Mega Forge Tons o'Cash</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/jaws-and-jewels-power-combo" target="_blank" rel="noopener noreferrer">Mega Forge Tons o'Cash</a></div>
         <div class="card-type">Video slot · 5 reels · 20 paylines</div>
         <div class="badges">
           <span class="badge b-amber">Tons o'Cash</span>
@@ -321,14 +351,14 @@ body {
          data-rtp="96.24%" data-vol="Medium" data-maxwin="5,000x"
          data-desc="Pirate adventure featuring sharks as main characters. The dynamic grid expands from 4 to 6 rows. Three sharks (blue, red, yellow) each represent a distinct Free Spins feature with multipliers and jackpots."
          data-badges='[["b-coral","Power Combo"],["b-teal","Free Spins"],["b-purple","Multiplier"],["b-blue","Lucky Frame"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2024/10/Jaws-and-Jewels-Power-Combo-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Games-Global/44740/jaws-and-jewels-power-combo-7101828.webp">
       <div class="card-img">
         <img alt="Jaws and Jewels Power Combo" loading="lazy">
         <div class="rtp-badge">RTP 96.24%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Jaws and Jewels Power Combo</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/jaws-and-jewels-power-combo" target="_blank" rel="noopener noreferrer">Jaws and Jewels Power Combo</a></div>
         <div class="card-type">Video slot · 6 reels · 30–56 paylines</div>
         <div class="badges">
           <span class="badge b-coral">Power Combo</span>
@@ -343,23 +373,23 @@ body {
     </div>
 
     <div class="game-card" data-tags="free-spins jackpot" data-delay="2"
-         data-title="Big Mighty Bear"
+         data-title="Space Haul Inc."
          data-type="Video slot · 5 reels · 8 paylines"
          data-rtp="96.00%" data-vol="Medium" data-maxwin="15,000x"
-         data-desc="Brown bear in an enchanted forest with an innovative layout: reel 1 can hold 1 to 5 symbols, making the 8 paylines dynamic per spin. The giant bear symbol up to 4x4 can hit the max win even in the base game."
+         data-desc="Change this"
          data-badges='[["b-coral","Big Bear Feature"],["b-amber","Honey Respin"],["b-teal","Sweet Bonus"],["b-blue","Free Spins"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2023/01/big-mighty-bear-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Ino-Games/45268/space-haul-inc-7105572.webp">
       <div class="card-img">
-        <img alt="Big Mighty Bear" loading="lazy">
+        <img alt="Space Haul Inc." loading="lazy">
         <div class="rtp-badge">RTP 96.00%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Big Mighty Bear</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/space-haul-inc" target="_blank" rel="noopener noreferrer"></a>Space Haul Inc.</a></div>
         <div class="card-type">Video slot · 5 reels · 8 paylines</div>
         <div class="badges">
-          <span class="badge b-coral">Big Bear Feature</span>
-          <span class="badge b-amber">Honey Respin</span>
+          <span class="badge b-coral">Space Haul Feature</span>
+          <span class="badge b-amber">Space Haul Respin</span>
           <span class="badge b-blue">Free Spins</span>
         </div>
         <div class="card-footer">
@@ -375,14 +405,14 @@ body {
          data-rtp="96.05%" data-vol="High" data-maxwin="10,000x"
          data-desc="Hip-hop styled penguin draped in gold jewelry. Link&Win collects cash prizes and progressive jackpots. Features a fully original rap soundtrack commissioned exclusively for the game."
          data-badges='[["b-blue","Link & Win"],["b-gold","Jackpot Wheel"],["b-teal","Free Spins"],["b-purple","Multiplier Upgrade"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2023/06/bling-bling-penguin-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Ino-Games/30083/Bling-Bling-Penguin-6992009.png">
       <div class="card-img">
         <img alt="Bling Bling Penguin" loading="lazy">
         <div class="rtp-badge">RTP 96.05%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Bling Bling Penguin</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/space-haul-inc" target="_blank" rel="noopener noreferrer">Bling Bling Penguin</a></div>
         <div class="card-type">Video slot · 5 reels · 1,024 ways</div>
         <div class="badges">
           <span class="badge b-blue">Link &amp; Win</span>
@@ -402,14 +432,14 @@ body {
          data-rtp="96.10%" data-vol="High" data-maxwin="5,000x"
          data-desc="Tropical sequel to the original, set on a snow-dusted beach. Features an upgraded Ultra Link&Win mechanic, Break the Ice surprises, and a Feature Buy option for high-stakes players."
          data-badges='[["b-purple","Ultra Link & Win"],["b-teal","Break the Ice"],["b-blue","Feature Buy"],["b-amber","Bonus Wheel"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2024/05/bling-bling-penguin-ice-on-the-beach-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Games-Global/37006/bling-bling-penguin-ice-on-the-beach-7044589.webp">
       <div class="card-img">
         <img alt="Bling Bling Penguin Ice on the Beach" loading="lazy">
         <div class="rtp-badge">RTP 96.10%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Bling Bling Penguin: Ice on the Beach</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/space-haul-inc" target="_blank" rel="noopener noreferrer"></a>Bling Bling Penguin: Ice on the Beach</a></div>
         <div class="card-type">Video slot · 5 reels · sequel</div>
         <div class="badges">
           <span class="badge b-purple">Ultra Link &amp; Win</span>
@@ -429,14 +459,14 @@ body {
          data-rtp="96.04%" data-vol="Medium" data-maxwin="N/A"
          data-desc="Modern fruit machine with the Spin'n'Fuse mechanic: symbols fuse together to create cascading combinations. The Boost feature and free spins chain together for multiplied win sequences."
          data-badges='[["b-green","Spin n Fuse"],["b-amber","Boost"],["b-teal","Free Spins"],["b-coral","Cluster Pays"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2024/03/fruit-blender-mania-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Ino-Games/35746/fruit-blender-mania-7035749.jpg">
       <div class="card-img">
         <img alt="Fruit Blender Mania" loading="lazy">
         <div class="rtp-badge">RTP 96.04%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Fruit Blender Mania</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/space-haul-inc" target="_blank" rel="noopener noreferrer"></a>Fruit Blender Mania</a></div>
         <div class="card-type">Video slot · 5 reels · 3 rows</div>
         <div class="badges">
           <span class="badge b-green">Spin'n'Fuse</span>
@@ -456,14 +486,14 @@ body {
          data-rtp="96.10%" data-vol="Medium" data-maxwin="4,000x"
          data-desc="A cunning fox in a sunlit farm. Scatter pays trigger with 8+ matching symbols. Golden eggs apply 2x–10x multipliers; cascades and Free Spins accumulate a total win multiplier across all rounds."
          data-badges='[["b-pink","Multiplier Hunt"],["b-gold","Golden Eggs"],["b-coral","Cascades"],["b-blue","Free Spins"]]'
-         data-img="https://igamingtoday.com/wp-content/uploads/2023/10/fox-fortunata-multiplier-hunt-featured.jpg">
+         data-img="https://slotcatalog.com/userfiles/image/games/Ino-Games/32022/Fox-Fortunata-Multiplier-Hunt-7006338.png">
       <div class="card-img">
         <img alt="Fox Fortunata: Multiplier Hunt" loading="lazy">
         <div class="rtp-badge">RTP 96.10%</div>
       </div>
       <div class="card-body">
         <div class="card-company">Ino Games</div>
-        <div class="card-title">Fox Fortunata: Multiplier Hunt</div>
+        <div class="card-title"><a href="https://slotcatalog.com/en/slots/space-haul-inc" target="_blank" rel="noopener noreferrer"></a>Fox Fortunata: Multiplier Hunt</a></div>
         <div class="card-type">Video slot · 5 reels · scatter pays</div>
         <div class="badges">
           <span class="badge b-pink">Multiplier Hunt</span>
@@ -593,6 +623,10 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 const backdrop = document.getElementById('modalBackdrop');
+
+document.querySelectorAll('.card-title a').forEach(link => {
+  link.addEventListener('click', e => e.stopPropagation());
+});
 
 document.querySelectorAll('.game-card').forEach(card => {
   card.addEventListener('click', () => {
